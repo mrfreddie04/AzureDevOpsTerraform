@@ -24,6 +24,11 @@ terraform {
     }
 }
 
+variable "imagebuild" {
+  type        = string
+  description = "Latest Image Build"
+}
+
 resource "azurerm_resource_group" "tf_test" {
   name = "tfmainrg"
   location = "East US"
@@ -40,13 +45,13 @@ resource "azurerm_container_group" "tfcg_test" {
 
   container {
       name            = "weatherapi"
-      image           = "piotrfranekjan/weatherapi"
-        cpu             = "1"
-        memory          = "1"
+      image           = "piotrfranekjan/weatherapi:${var.imagebuild}"
+      cpu             = "1"
+      memory          = "1"
 
-        ports {
-            port        = 80
-            protocol    = "TCP"
-        }
+      ports {
+          port        = 80
+          protocol    = "TCP"
+      }
   }
 }
