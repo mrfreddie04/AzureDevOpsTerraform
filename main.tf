@@ -14,6 +14,16 @@ provider "azurerm" {
   features {}
 }
 
+# Configure TF to use AZ blob storage for terraform.tfstate file
+terraform {
+    backend "azurerm" {
+        resource_group_name  = "tfstoragerg"
+        storage_account_name = "tfstoragepersistence"
+        container_name       = "tfstate"
+        key                  = "terraform.tfstate"
+    }
+}
+
 resource "azurerm_resource_group" "tf_test" {
   name = "tfmainrg"
   location = "East US"
